@@ -40,7 +40,6 @@ class Server(SocketHandler):
         while True :
             try:
                 conn, addr = self.sock.accept()
-                #conn.setblocking(False)
                 t = Thread(target=self.process, args=(conn,))
                 t.daemon = True
                 t.start()
@@ -77,7 +76,6 @@ class Server(SocketHandler):
         if (not self.checkDirectory(self.path)):
             print("->Server path doesn't exists")
         else:
-            #name = str(input("-> Select the bucket name:\n-> "))
             name = data.getData()
             path = os.path.join(self.path, name)
             try:  
@@ -144,13 +142,7 @@ class Server(SocketHandler):
         path = os.path.join(self.path, name)
         dirs = glob.glob(path + '\*')
         return dirs
-        """
-        i = 0
 
-        for path in dirs:
-            print("  ",  i, " - ", path)
-            i += 1
-        """
 
     def lsb(self, client):
         self.sendMessage(client, 4, self.buckets, "Buckets")
